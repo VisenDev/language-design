@@ -1,46 +1,46 @@
 
 ;; Variable declaration
-(let count:int 10)
-(let initial:char #\b)
-(let name:string "bob")
-(let eligible:bool true)
+(let count :int 10)
+(let initial :char #\b)
+(let name :string "bob")
+(let eligible :bool true)
 
 ;; inferred types
 (let num 1.0) ;; inferred num as float
 
-;; Pure Function Definition
-(defun double:int (number:int)
+;; Function Definition
+(defun double :int (number :int)
   (* number 2))
-
-;; Impure Function Definition (allows side effects)
-(defprocedure sayhello:void (name:string)
-  (print "Hello, " name))
 
 ;; Structs
 (defstruct vector2
 
   ;; fields
-  (defield x:int 0)
-  (defield y:int 0)
+  ((x :int 0) ; has default value
+   (y :int 0)
+
+   idx :int   ; no default value
+   ref :int)
 
   ;; struct functions/procedures that can be called with dot syntax
-  (defun add:vector2 (self:vector2 other:vector2)
+  (defun add :vector2 (self :vector2 other :vector2)
     (make-vector2 .x (+ self.x other.x)
                   .y (+ self.y other.y))))
 
 (defstruct color
-  (field r:byte 0)
-  (field g:byte 0)
-  (field b:byte 0))
+  ((r :byte 0)
+   (g :byte 0)
+   (b :byte 0)))
+
+
+;; Enums
+(defenum states
+  (success ; enums without assigned values
+   failure
+   partial-success))
 
 (defenum colors
-  (red (make-color .r 255 .g 0 .b 0))
-  (green (make-color .r 0 .g 255 .b 0)))
-
-(defenum states
-  success
-  failure
-  partial-success)
+  ((red (make-color .r 255 .g 0 .b 0)) ; enums with assigned values
+   (green (make-color .r 0 .g 255 .b 0))))
 
 
-;; prototypes
